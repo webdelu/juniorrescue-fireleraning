@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System-Update | GE</title>
+    <title>Wartungsmodus | System Red</title>
     <style>
         body {
-            background-color: #0a0a0a;
-            color: #00f2ff;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #000000; /* Tiefschwarz */
+            color: #ff0000; /* Signalrot */
+            font-family: 'Courier New', Courier, monospace; /* Technischer Look */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,90 +16,105 @@
             margin: 0;
             overflow: hidden;
             text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
         .container {
             text-align: center;
-            position: relative;
+            z-index: 2;
         }
 
-        /* Pulsierender Kreis im Hintergrund */
-        .loader {
-            width: 250px;
-            height: 250px;
-            border: 2px solid rgba(0, 242, 255, 0.1);
-            border-radius: 50%;
+        /* Das Logo */
+        .logo {
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
+            animation: flicker 4s infinite;
+        }
+
+        /* Pulsierender Hintergrund-Effekt */
+        .pulse-bg {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: pulse 2s infinite ease-in-out;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            border-radius: 50%;
+            animation: pulse 3s infinite alternate;
         }
 
         @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.8; }
-            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; }
-            100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.8; }
+            from { transform: scale(0.8); opacity: 0.5; }
+            to { transform: scale(1.3); opacity: 1; }
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+            20%, 24%, 55% { opacity: 0.4; }
         }
 
         h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(0, 242, 255, 0.6);
+            font-size: 2.5rem;
+            margin: 10px 0;
+            letter-spacing: 5px;
+            text-shadow: 0 0 15px #ff0000;
         }
 
-        p {
-            font-size: 1rem;
-            color: #888;
+        .status-box {
+            border: 1px solid #ff0000;
+            padding: 15px;
+            display: inline-block;
+            background: rgba(255, 0, 0, 0.05);
+            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
         }
 
-        .status-bar {
-            width: 300px;
-            height: 4px;
-            background: #222;
-            margin: 30px auto;
+        .loader-bar {
+            width: 250px;
+            height: 2px;
+            background: #300;
+            margin: 20px auto;
             position: relative;
             overflow: hidden;
         }
 
-        .status-progress {
-            width: 40%;
+        .loader-fill {
+            position: absolute;
+            width: 60%;
             height: 100%;
-            background: #00f2ff;
-            box-shadow: 0 0 15px #00f2ff;
-            animation: loading 3s infinite ease-in-out;
+            background: #ff0000;
+            box-shadow: 0 0 10px #ff0000;
+            animation: scan 2.5s infinite linear;
         }
 
-        @keyframes loading {
+        @keyframes scan {
             0% { left: -100%; }
             100% { left: 100%; }
         }
 
-        .glitch {
-            animation: glitch 1s linear infinite;
-        }
-
-        @keyframes glitch {
-            2%, 64% { transform: translate(2px, 0) skew(0deg); }
-            4%, 60% { transform: translate(-2px, 0) skew(0deg); }
-            62% { transform: translate(0, 0) skew(5deg); }
+        .warning-text {
+            font-size: 0.8rem;
+            color: #600;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
-    <div class="loader"></div>
+    <div class="pulse-bg"></div>
     
     <div class="container">
-        <h1 class="glitch">System Offline</h1>
-        <p>Wartungsarbeiten im Gange</p>
+        <!-- Logo Platzhalter -->
+        <img src="logo.png" alt="GE Logo" class="logo">
         
-        <div class="status-bar">
-            <div class="status-progress"></div>
+        <div class="status-box">
+            <h1>System Alert</h1>
+            <p>Maintenance in Progress</p>
         </div>
         
-        <p style="font-size: 0.7rem; color: #444;">GE-Unit: 04-2024 // Access: Restricted</p>
+        <div class="loader-bar">
+            <div class="loader-fill"></div>
+        </div>
+        
+        <p class="warning-text">Authorized Personnel Only // Protocol 0-GE</p>
     </div>
 
 </body>
