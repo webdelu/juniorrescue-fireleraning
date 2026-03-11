@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wartungsmodus | System Red</title>
+    <title>Wartungsmodus | GE System</title>
     <style>
         body {
-            background-color: #000000; /* Tiefschwarz */
-            color: #ff0000; /* Signalrot */
-            font-family: 'Courier New', Courier, monospace; /* Technischer Look */
+            background-color: #000000;
+            color: #ff0000;
+            font-family: 'Courier New', Courier, monospace;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,71 +18,68 @@
             text-transform: uppercase;
         }
 
+        /* Scanline-Effekt (Alte Monitore) */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 10;
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+        }
+
         .container {
             text-align: center;
             z-index: 2;
         }
 
-        /* Das Logo */
         .logo {
-            max-width: 180px;
+            max-width: 200px;
             height: auto;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
-            animation: flicker 4s infinite;
-        }
-
-        /* Pulsierender Hintergrund-Effekt */
-        .pulse-bg {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-            border-radius: 50%;
-            animation: pulse 3s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from { transform: scale(0.8); opacity: 0.5; }
-            to { transform: scale(1.3); opacity: 1; }
-        }
-
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-            20%, 24%, 55% { opacity: 0.4; }
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin: 10px 0;
-            letter-spacing: 5px;
-            text-shadow: 0 0 15px #ff0000;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.6));
         }
 
         .status-box {
-            border: 1px solid #ff0000;
-            padding: 15px;
-            display: inline-block;
+            border: 2px solid #ff0000;
+            padding: 20px 40px;
             background: rgba(255, 0, 0, 0.05);
-            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            display: inline-block;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin: 0;
+            letter-spacing: 4px;
+            text-shadow: 2px 2px #000, 0 0 15px #ff0000;
+        }
+
+        p.sub-text {
+            font-size: 1.1rem;
+            margin-top: 10px;
+            color: #ff3333;
         }
 
         .loader-bar {
-            width: 250px;
-            height: 2px;
-            background: #300;
-            margin: 20px auto;
+            width: 300px;
+            height: 3px;
+            background: #200;
+            margin: 30px auto;
             position: relative;
             overflow: hidden;
         }
 
         .loader-fill {
             position: absolute;
-            width: 60%;
+            width: 50%;
             height: 100%;
             background: #ff0000;
-            box-shadow: 0 0 10px #ff0000;
-            animation: scan 2.5s infinite linear;
+            box-shadow: 0 0 15px #ff0000;
+            animation: scan 2s infinite ease-in-out;
         }
 
         @keyframes scan {
@@ -90,31 +87,49 @@
             100% { left: 100%; }
         }
 
-        .warning-text {
-            font-size: 0.8rem;
-            color: #600;
-            margin-top: 20px;
+        .footer-info {
+            font-size: 0.75rem;
+            color: #500;
+            margin-top: 40px;
+            letter-spacing: 1px;
+        }
+
+        /* Pulsierendes Warnlicht im Hintergrund */
+        .ambient-light {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(150, 0, 0, 0.1) 0%, rgba(0,0,0,0) 70%);
+            animation: pulse 4s infinite alternate;
+            z-index: 1;
+        }
+
+        @keyframes pulse {
+            from { opacity: 0.3; }
+            to { opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-    <div class="pulse-bg"></div>
+    <div class="ambient-light"></div>
     
     <div class="container">
-        <!-- Logo Platzhalter -->
-        <img src="logo.png" alt="GE Logo" class="logo">
+        <!-- Deine logo.png muss im selben Ordner liegen -->
+        <img src="logo.png" alt="Logo" class="logo">
         
         <div class="status-box">
-            <h1>System Alert</h1>
-            <p>Maintenance in Progress</p>
+            <h1>SYSTEM-WARTUNG</h1>
+            <p class="sub-text">DIENST AKTUELL NICHT VERFÜGBAR</p>
         </div>
         
         <div class="loader-bar">
             <div class="loader-fill"></div>
         </div>
         
-        <p class="warning-text">Authorized Personnel Only // Protocol 0-GE</p>
+        <div class="footer-info">
+            ZUGRIFF VERWEIGERT // PROTOKOLL: GE-MAINTENANCE-01 // STANDORT: BOCHUM
+        </div>
     </div>
 
 </body>
